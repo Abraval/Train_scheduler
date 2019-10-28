@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8" />
+    <title>Train Scheduler</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+
+    <link rel="stylesheet" href="assets/style.css" />
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+  </head>
+
+  <body>
+    <div
+      class="jumbotron jumbotron-fluid shadow border-0 rounded mx-4 text-center text-light"
+    >
+      <h1 class="display-4 font-weight-bold">
+        <i class="fas fa-subway px-2"></i>Train Scheduler
+      </h1>
+      ​
+    </div>
+    <div class="card border-0 mx-4 my-0 shadow">
+      <div class="card-header border-0 text-light mb-2">
+        <h5>Curren Train Schedule</h5>
+      </div>
+      <div class="card-body px-5 py-3" id="currentTrain"></div>
+      ​
+    </div>
+
+    <div class="card border-0 m-4 shadow">
+      <div class="card-header border-0 text-light mb-2">
+        <h5>Add Train</h5>
+      </div>
+      <div class="card-body">
+        <form class="text-muted font-weight-bold">
+          <div class="form-group">
+            <label for="trainName">Train Name:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="trainName"
+              placeholder=""
+            />
+          </div>
+          <div class="form-group">
+            <label for="destination">Destination:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="destination"
+              placeholder=""
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="firstTrain"> First Train Time (military time):</label>
+            <input
+              type="text"
+              class="form-control"
+              id="firstTrain"
+              placeholder=""
+            />
+          </div>
+          ​
+          <div class="form-group">
+            <label for="frequency">Frequency (min):</label>
+            <input
+              type="text"
+              class="form-control"
+              id="frequency"
+              placeholder=""
+            />
+          </div>
+          ​
+          <div class="button py-2">
+            <button
+              type="button"
+              class="btn btn-info btn-lg border-0 shadow"
+              id="search-btn"
+            >
+              <i class="fas fa-search px-2"></i>Search
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    ​​
+    <script type="text/javascript" src="assets/app.js"></script>
+    ​
+  </body>
+  ​
+</html>
