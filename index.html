@@ -29,9 +29,9 @@
       <div class="card-header border-0 text-light mb-2">
         <h5>Curren Train Schedule</h5>
       </div>
-      <div class="card-body px-5 py-3" id="currentTrain"></div>
-      <table class="table">
-        <thead class="thead-light">
+      <div class="card-body px-5 py-3" id="currentTrain">
+      <table class="table border-0 rounded-lg shadow">
+        <thead class="thead text-light text-center border-0 rounded-lg shadow">
           <tr>
             <th scope="col">Train Name</th>
             <th scope="col">Destination</th>
@@ -40,9 +40,9 @@
             <th scope="col">Minutes Away</th>
           </tr>
         </thead>
-        <tbody class="tschedule"></tbody>
+        <tbody class="tschedule text-center bg-light"></tbody>
       </table>
-      ​
+      ​</div>
     </div>
 
     <div class="card border-0 m-4 shadow">
@@ -111,11 +111,7 @@
     <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-app.js"></script>
 
     <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-database.js"></script>
-    <!-- <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/af.js"
-      integrity="sha256-I5ZXO8KcMnqNkrXU7baGig70nATYjNDnxxA2d40PcR8="
-      crossorigin="anonymous"
-    ></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script>
       var firebaseConfig = {
         apiKey: "AIzaSyCnANRTzcG3Vv072uyXdz5w4XSevdw2WtA",
@@ -162,23 +158,19 @@
           frequency: frequency
         });
       });
-      database.ref().on("value", function(snapshot) {
+      database.ref().on("child_added", function(snapshot) {
         var trainData = snapshot.val();
-        // console.log(snapshot.val());
-        for (var key in trainData) {
-          // console.log(key);
-          // console.log(trainData[key]);
-          var tSched = $(".tschedule");
-          var tr = $("<tr>");
+        var tSched = $(".tschedule");
+        var tr = $("<tr>");
 
-          var tname = $("<td>").text(trainData[key].name);
-          var tdestination = $("<td>").text(trainData[key].destination);
-          var tFirst = $("<td>").text(trainData[key].firstTrain);
-          var tfrequency = $("<td>").text(trainData[key].frequency);
+        var tname = $("<td>").text(trainData.name);
+        var tdestination = $("<td>").text(trainData.destination);
+        var tFirst = $("<td>").text(trainData.firstTrain);
+        var tfrequency = $("<td>").text(trainData.frequency);
 
-          tr.append(tname, tdestination, tfrequency);
-          tSched.append(tr);
-        }
+        tr.append(tname, tdestination, tfrequency);
+
+        tSched.append(tr);
       });
     </script>
     ​
