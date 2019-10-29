@@ -40,7 +40,7 @@
             <th scope="col">Minutes Away</th>
           </tr>
         </thead>
-        <tbody></tbody>
+        <tbody class="tschedule"></tbody>
       </table>
       ​
     </div>
@@ -73,9 +73,11 @@
           <div class="form-group">
             <label for="firstTrain"> First Train Time (military time):</label>
             <input
-              type="text"
+              type="time"
               class="form-control"
               id="firstTrain"
+              min="00:00"
+              max="23:59"
               placeholder=""
             />
           </div>
@@ -109,7 +111,11 @@
     <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-app.js"></script>
 
     <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-database.js"></script>
-
+    <!-- <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/af.js"
+      integrity="sha256-I5ZXO8KcMnqNkrXU7baGig70nATYjNDnxxA2d40PcR8="
+      crossorigin="anonymous"
+    ></script> -->
     <script>
       var firebaseConfig = {
         apiKey: "AIzaSyCnANRTzcG3Vv072uyXdz5w4XSevdw2WtA",
@@ -149,12 +155,30 @@
           .val()
           .trim();
 
-        database.ref().set({
+        database.ref().push({
           name: name,
           destination: destination,
           firstTrain: firstTrain,
           frequency: frequency
         });
+      });
+      database.ref().on("value", function(snapshot) {
+        var trainData = snapshot.val();
+        // console.log(snapshot.val());
+        for (var key in trainData) {
+          // console.log(key);
+          // console.log(trainData[key]);
+          var tSched = $(".tschedule");
+          var tr = $("<tr>");
+
+          var tname = $("<td>").text(trainData[key].name);
+          var tdestination = $("<td>").text(trainData[key].destination);
+          var tFirst = $("<td>").text(trainData[key].firstTrain);
+          var tfrequency = $("<td>").text(trainData[key].frequency);
+
+          tr.append(tname, tdestination, tfrequency);
+          tSched.append(tr);
+        }
       });
     </script>
     ​
