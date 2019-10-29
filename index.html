@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-
   <head>
     <meta charset="UTF-8" />
     <title>Train Scheduler</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
     <link
       rel="stylesheet"
@@ -26,11 +24,24 @@
       </h1>
       ​
     </div>
+
     <div class="card border-0 mx-4 my-0 shadow">
       <div class="card-header border-0 text-light mb-2">
         <h5>Curren Train Schedule</h5>
       </div>
       <div class="card-body px-5 py-3" id="currentTrain"></div>
+      <table class="table">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">Train Name</th>
+            <th scope="col">Destination</th>
+            <th scope="col">Frequency</th>
+            <th scope="col">Next Arrival</th>
+            <th scope="col">Minutes Away</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
       ​
     </div>
 
@@ -91,8 +102,61 @@
         </form>
       </div>
     </div>
+
     ​​
-    <script type="text/javascript" src="assets/app.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-app.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-database.js"></script>
+
+    <script>
+      var firebaseConfig = {
+        apiKey: "AIzaSyCnANRTzcG3Vv072uyXdz5w4XSevdw2WtA",
+        authDomain: "train-scheduler-a4e21.firebaseapp.com",
+        databaseURL: "https://train-scheduler-a4e21.firebaseio.com",
+        projectId: "train-scheduler-a4e21",
+        storageBucket: "train-scheduler-a4e21.appspot.com",
+        messagingSenderId: "825965794949",
+        appId: "1:825965794949:web:c1f6823a4130d5a71dbbec"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+
+      var database = firebase.database();
+
+      var name = "";
+      var destination = "";
+      var firstTrain = "";
+      var frequency = "";
+
+      var nextArrival = "";
+      var minAway = "";
+
+      $("#search-btn").on("click", function(event) {
+        event.preventDefault();
+
+        name = $("#trainName")
+          .val()
+          .trim();
+        destination = $("#destination")
+          .val()
+          .trim();
+        firstTrain = $("#firstTrain")
+          .val()
+          .trim();
+        frequency = $("#frequency")
+          .val()
+          .trim();
+
+        database.ref().set({
+          name: name,
+          destination: destination,
+          firstTrain: firstTrain,
+          frequency: frequency
+        });
+      });
+    </script>
     ​
   </body>
   ​
