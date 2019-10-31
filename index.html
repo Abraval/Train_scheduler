@@ -30,19 +30,22 @@
         <h5>Curren Train Schedule</h5>
       </div>
       <div class="card-body px-5 py-3" id="currentTrain">
-      <table class="table border-0 rounded-lg shadow">
-        <thead class="thead text-light text-center border-0 rounded-lg shadow">
-          <tr>
-            <th scope="col">Train Name</th>
-            <th scope="col">Destination</th>
-            <th scope="col">Frequency</th>
-            <th scope="col">Next Arrival</th>
-            <th scope="col">Minutes Away</th>
-          </tr>
-        </thead>
-        <tbody class="tschedule text-center bg-light"></tbody>
-      </table>
-      ​</div>
+        <table class="table border-0 rounded-lg shadow">
+          <thead
+            class="thead text-light text-center border-0 rounded-lg shadow"
+          >
+            <tr>
+              <th scope="col">Train Name</th>
+              <th scope="col">Destination</th>
+              <th scope="col">Frequency</th>
+              <th scope="col">Next Arrival</th>
+              <th scope="col">Minutes Away</th>
+            </tr>
+          </thead>
+          <tbody class="tschedule text-center bg-light"></tbody>
+        </table>
+        ​
+      </div>
     </div>
 
     <div class="card border-0 m-4 shadow">
@@ -73,12 +76,10 @@
           <div class="form-group">
             <label for="firstTrain"> First Train Time (military time):</label>
             <input
-              type="time"
+              type="text"
               class="form-control"
               id="firstTrain"
-              min="00:00"
-              max="23:59"
-              placeholder=""
+              placeholder="00:00"
             />
           </div>
           ​
@@ -160,15 +161,42 @@
       });
       database.ref().on("child_added", function(snapshot) {
         var trainData = snapshot.val();
+
         var tSched = $(".tschedule");
+
         var tr = $("<tr>");
+
+        var tfrequency = trainData.frequency;
+        var firstTime = trainData.firstTrain;
+
+        var currentTime = moment();
+        moment(currentTime).format("HH:mm");
+        var firstTimeConverted = moment(firstTime, "HH:mm").subtract(
+          1,
+          "years"
+        );
+        console.log(firstTimeConverted);
+
+        var diffTime = moment().diff(moment(firstTimeConverted), "hours");
+
+        console.log("DIFFERENCE IN TIME: " + diffTime);
+
+        var tRemainder = diffTime % tfrequency;
+
+        var tMinutesTillTrain = tfrequency - tRemainder;
+        console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
+
+        var nextTrain = moment().add(tMinutesTillTrain, "minutes");
+        console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
 
         var tname = $("<td>").text(trainData.name);
         var tdestination = $("<td>").text(trainData.destination);
         var tFirst = $("<td>").text(trainData.firstTrain);
         var tfrequency = $("<td>").text(trainData.frequency);
-
-        tr.append(tname, tdestination, tfrequency);
+        var nextArr = $("<td>").text(moment(nextTrain).format("hh:mm"));
+        var minAway = $("<td>").text(tMinutesTillTrain);
+      
+        tr.append(tname, tdestination, tfrequency, nextArr, minAway);
 
         tSched.append(tr);
       });
