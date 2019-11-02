@@ -1,207 +1,187 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Train Scheduler</title>
 
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-      crossorigin="anonymous"
-    />
+<head>
+  <meta charset="UTF-8" />
+  <title>Train Scheduler</title>
 
-    <link rel="stylesheet" href="assets/style.css" />
-    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-  </head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
 
-  <body>
-    <div
-      class="jumbotron jumbotron-fluid shadow border-0 rounded mx-4 text-center text-light"
-    >
-      <h1 class="display-4 font-weight-bold">
-        <i class="fas fa-subway px-2"></i>Train Scheduler
-      </h1>
+  <link rel="stylesheet" href="assets/style.css" />
+  <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+  <!-- <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css"
+    rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/bootstrap.timepicker/0.2.6/css/bootstrap-timepicker.min.css" rel="stylesheet" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+  <script src="https://code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="https://cdn.jsdelivr.net/bootstrap.timepicker/0.2.6/js/bootstrap-timepicker.min.js"></script>
+ -->
+
+</head>
+
+<body>
+  <div class="jumbotron jumbotron-fluid shadow border-0 rounded mx-4 text-center text-light">
+    <h1 class="display-4 font-weight-bold">
+      <i class="fas fa-subway px-2"></i>Train Scheduler
+    </h1>
+    ​
+  </div>
+
+  <div class="card border-0 mx-4 my-0 shadow">
+    <div class="card-header border-0 text-light mb-2">
+      <h5>Curren Train Schedule</h5>
+    </div>
+    <div class="card-body px-5 py-3" id="currentTrain">
+      <table class="table border-0 rounded-lg shadow">
+        <thead class="thead text-light text-center border-0 rounded-lg shadow">
+          <tr>
+            <th scope="col">Train Name</th>
+            <th scope="col">Destination</th>
+            <th scope="col">Frequency</th>
+            <th scope="col">Next Arrival</th>
+            <th scope="col">Minutes Away</th>
+          </tr>
+        </thead>
+        <tbody class="tschedule text-center bg-light"></tbody>
+      </table>
       ​
     </div>
+  </div>
 
-    <div class="card border-0 mx-4 my-0 shadow">
-      <div class="card-header border-0 text-light mb-2">
-        <h5>Curren Train Schedule</h5>
-      </div>
-      <div class="card-body px-5 py-3" id="currentTrain">
-        <table class="table border-0 rounded-lg shadow">
-          <thead
-            class="thead text-light text-center border-0 rounded-lg shadow"
-          >
-            <tr>
-              <th scope="col">Train Name</th>
-              <th scope="col">Destination</th>
-              <th scope="col">Frequency</th>
-              <th scope="col">Next Arrival</th>
-              <th scope="col">Minutes Away</th>
-            </tr>
-          </thead>
-          <tbody class="tschedule text-center bg-light"></tbody>
-        </table>
+  <div class="card border-0 m-4 shadow">
+    <div class="card-header border-0 text-light mb-2">
+      <h5>Add Train</h5>
+    </div>
+    <div class="card-body">
+      <form class="text-muted font-weight-bold">
+        <div class="form-group">
+          <label for="trainName">Train Name:</label>
+          <input type="text" class="form-control" id="trainName" placeholder="" />
+        </div>
+        <div class="form-group">
+          <label for="destination">Destination:</label>
+          <input type="text" class="form-control" id="destination" placeholder="" />
+        </div>
+
+        <div class="form-group">
+          <label for="firstTrain"> First Train Time (military time):</label>
+          <input type="text" class="form-control" id="firstTrain" placeholder="00:00" />
+        </div>
         ​
-      </div>
+        <div class="form-group">
+          <label for="frequency">Frequency (min):</label>
+          <input type="text" class="form-control" id="frequency" placeholder="" />
+        </div>
+        ​
+        <div class="button py-2">
+          <button type="button" class="btn btn-info btn-lg border-0 shadow" id="search-btn">
+            <i class="fas fa-search px-2"></i>Search
+          </button>
+        </div>
+      </form>
     </div>
+  </div>
 
-    <div class="card border-0 m-4 shadow">
-      <div class="card-header border-0 text-light mb-2">
-        <h5>Add Train</h5>
-      </div>
-      <div class="card-body">
-        <form class="text-muted font-weight-bold">
-          <div class="form-group">
-            <label for="trainName">Train Name:</label>
-            <input
-              type="text"
-              class="form-control"
-              id="trainName"
-              placeholder=""
-            />
-          </div>
-          <div class="form-group">
-            <label for="destination">Destination:</label>
-            <input
-              type="text"
-              class="form-control"
-              id="destination"
-              placeholder=""
-            />
-          </div>
+  ​​
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-          <div class="form-group">
-            <label for="firstTrain"> First Train Time (military time):</label>
-            <input
-              type="text"
-              class="form-control"
-              id="firstTrain"
-              placeholder="00:00"
-            />
-          </div>
-          ​
-          <div class="form-group">
-            <label for="frequency">Frequency (min):</label>
-            <input
-              type="text"
-              class="form-control"
-              id="frequency"
-              placeholder=""
-            />
-          </div>
-          ​
-          <div class="button py-2">
-            <button
-              type="button"
-              class="btn btn-info btn-lg border-0 shadow"
-              id="search-btn"
-            >
-              <i class="fas fa-search px-2"></i>Search
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
+  <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-app.js"></script>
 
-    ​​
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-database.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+  <script>
+    var firebaseConfig = {
+      apiKey: "AIzaSyCnANRTzcG3Vv072uyXdz5w4XSevdw2WtA",
+      authDomain: "train-scheduler-a4e21.firebaseapp.com",
+      databaseURL: "https://train-scheduler-a4e21.firebaseio.com",
+      projectId: "train-scheduler-a4e21",
+      storageBucket: "train-scheduler-a4e21.appspot.com",
+      messagingSenderId: "825965794949",
+      appId: "1:825965794949:web:c1f6823a4130d5a71dbbec"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
 
-    <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-app.js"></script>
+    var database = firebase.database();
 
-    <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-database.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-    <script>
-      var firebaseConfig = {
-        apiKey: "AIzaSyCnANRTzcG3Vv072uyXdz5w4XSevdw2WtA",
-        authDomain: "train-scheduler-a4e21.firebaseapp.com",
-        databaseURL: "https://train-scheduler-a4e21.firebaseio.com",
-        projectId: "train-scheduler-a4e21",
-        storageBucket: "train-scheduler-a4e21.appspot.com",
-        messagingSenderId: "825965794949",
-        appId: "1:825965794949:web:c1f6823a4130d5a71dbbec"
-      };
-      // Initialize Firebase
-      firebase.initializeApp(firebaseConfig);
+    var name = "";
+    var destination = "";
+    var firstTrain = "";
+    var frequency = "";
 
-      var database = firebase.database();
+    var nextArrival = "";
+    var minAway = "";
 
-      var name = "";
-      var destination = "";
-      var firstTrain = "";
-      var frequency = "";
+    $("#search-btn").on("click", function (event) {
+      event.preventDefault();
 
-      var nextArrival = "";
-      var minAway = "";
+      name = $("#trainName")
+        .val()
+        .trim();
+      destination = $("#destination")
+        .val()
+        .trim();
+      firstTrain = $("#firstTrain")
+        .val()
+        .trim();
+      frequency = $("#frequency")
+        .val()
+        .trim();
 
-      $("#search-btn").on("click", function(event) {
-        event.preventDefault();
-
-        name = $("#trainName")
-          .val()
-          .trim();
-        destination = $("#destination")
-          .val()
-          .trim();
-        firstTrain = $("#firstTrain")
-          .val()
-          .trim();
-        frequency = $("#frequency")
-          .val()
-          .trim();
-
-        database.ref().push({
-          name: name,
-          destination: destination,
-          firstTrain: firstTrain,
-          frequency: frequency
-        });
+      database.ref().push({
+        name: name,
+        destination: destination,
+        firstTrain: firstTrain,
+        frequency: frequency
       });
-      database.ref().on("child_added", function(snapshot) {
-        var trainData = snapshot.val();
+    });
+    database.ref().on("child_added", function (snapshot) {
+      var trainData = snapshot.val();
 
-        var tSched = $(".tschedule");
+      var tSched = $(".tschedule");
 
-        var tr = $("<tr>");
+      var tr = $("<tr>");
 
-        var tfrequency = trainData.frequency;
-        var firstTime = trainData.firstTrain;
+      var tfrequency = trainData.frequency;
+      var firstTime = trainData.firstTrain;
 
-        var currentTime = moment();
-        moment(currentTime).format("HH:mm");
-        var firstTimeConverted = moment(firstTime, "HH:mm").subtract(
-          1,
-          "years"
-        );
-        console.log(firstTimeConverted);
+      var currentTime = moment();
+      moment(currentTime).format("HH:mm");
+      var firstTimeConverted = moment(firstTime, "HH:mm").subtract(
+        1,
+        "years"
+      );
+      console.log(firstTimeConverted);
 
-        var diffTime = moment().diff(moment(firstTimeConverted), "hours");
+      var diffTime = moment().diff(moment(firstTimeConverted), "hours");
 
-        console.log("DIFFERENCE IN TIME: " + diffTime);
+      console.log("DIFFERENCE IN TIME: " + diffTime);
 
-        var tRemainder = diffTime % tfrequency;
+      var tRemainder = diffTime % tfrequency;
 
-        var tMinutesTillTrain = tfrequency - tRemainder;
-        console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
+      var tMinutesTillTrain = tfrequency - tRemainder;
+      console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
 
-        var nextTrain = moment().add(tMinutesTillTrain, "minutes");
-        console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
+      var nextTrain = moment().add(tMinutesTillTrain, "minutes");
+      console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
 
-        var tname = $("<td>").text(trainData.name);
-        var tdestination = $("<td>").text(trainData.destination);
-        var tFirst = $("<td>").text(trainData.firstTrain);
-        var tfrequency = $("<td>").text(trainData.frequency);
-        var nextArr = $("<td>").text(moment(nextTrain).format("hh:mm"));
-        var minAway = $("<td>").text(tMinutesTillTrain);
-      
-        tr.append(tname, tdestination, tfrequency, nextArr, minAway);
+      var tname = $("<td>").text(trainData.name);
+      var tdestination = $("<td>").text(trainData.destination);
+      var tFirst = $("<td>").text(trainData.firstTrain);
+      var tfrequency = $("<td>").text(trainData.frequency);
+      var nextArr = $("<td>").text(moment(nextTrain).format("hh:mm"));
+      var minAway = $("<td>").text(tMinutesTillTrain);
 
-        tSched.append(tr);
-      });
-    </script>
-    ​
-  </body>
+      tr.append(tname, tdestination, tfrequency, nextArr, minAway);
+
+      tSched.append(tr);
+    });
+  </script>
   ​
+</body>
+​
+
 </html>
