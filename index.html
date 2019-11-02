@@ -148,7 +148,7 @@
       var tfrequency = trainData.frequency;
       var firstTime = trainData.firstTrain;
 
-      var currentTime = moment();
+      var currentTime = moment(currentTime).format("HH:mm");
       moment(currentTime).format("HH:mm");
       var firstTimeConverted = moment(firstTime, "HH:mm").subtract(
         1,
@@ -156,7 +156,7 @@
       );
       console.log(firstTimeConverted);
 
-      var diffTime = moment().diff(moment(firstTimeConverted), "hours");
+      var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
 
       console.log("DIFFERENCE IN TIME: " + diffTime);
 
@@ -166,13 +166,13 @@
       console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
 
       var nextTrain = moment().add(tMinutesTillTrain, "minutes");
-      console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
+      console.log("ARRIVAL TIME: " + moment(nextTrain).format("HH:mm"));
 
       var tname = $("<td>").text(trainData.name);
       var tdestination = $("<td>").text(trainData.destination);
       var tFirst = $("<td>").text(trainData.firstTrain);
       var tfrequency = $("<td>").text(trainData.frequency);
-      var nextArr = $("<td>").text(moment(nextTrain).format("hh:mm"));
+      var nextArr = $("<td>").text(moment(nextTrain).format("HH:mm"));
       var minAway = $("<td>").text(tMinutesTillTrain);
 
       tr.append(tname, tdestination, tfrequency, nextArr, minAway);
